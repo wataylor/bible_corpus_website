@@ -52,6 +52,8 @@ public class Vbls {
     public int verseNo = 0;
     /** Directory containing input files.*/
     public String path;
+    /** Output directory path*/
+    public String outdir;
     /** language prefix for database columns*/
     public String lang;
     /** General-purpose query string. */
@@ -75,18 +77,19 @@ public class Vbls {
 
 	/** Create object which contains all the command line aerguments
 	 * and information derived from them.
-	 * @param cargs Command line parser
+	 * @param cargsIn Command line parser
 	 * @param args command line arguments
 	 */
-	public Vbls(CommandArgs cargs, String[] args ) {
-    	this.cargs = cargs;
+	public Vbls(CommandArgs cargsIn, String[] args ) {
+    	this.cargs = cargsIn;
 		this.cargs.parseArgs(args);
-		path = (String)cargs.get("path");
-		lang = (String)cargs.get("lang");
-		verbose = cargs.getBoolean("verbose");
-		doIt = cargs.getBoolean("doIt");
-		fileLimit = cargs.getInt("limit");
-		verseLimit = cargs.getInt("verseLimit");
+		path = (String)this.cargs.get("path");
+		lang = (String)this.cargs.get("lang");
+		outdir = (String)this.cargs.get("outdir");
+		verbose = this.cargs.getBoolean("verbose");
+		doIt = this.cargs.getBoolean("doIt");
+		fileLimit = this.cargs.getInt("limit");
+		verseLimit = this.cargs.getInt("verseLimit");
 
 		if (PUTs.isStringMTP(path) || PUTs.isStringMTP(lang)) {
 			System.out.println("Command line must specify path= and lang=");
