@@ -11,7 +11,7 @@ import java.io.File;
 
 /** Read a Bible file in the standard Corpus format and print
  * all the SEG elements which define one verse of the Bible.
- * The purpose is to be abel to explore vairous aspects of the
+ * The purpose is to be able to explore various aspects of the
  * Corpus format.
  * @author Material Gain
  * @since 2020 10
@@ -47,7 +47,7 @@ public class JavaXmlParserMain {
 							NamedNodeMap nodeMap = nNode.getAttributes();
 							for (int i = 0; i < nodeMap.getLength(); i++) {
 								Node node = nodeMap.item(i);
-								System.out.println("attr name : " + node.getNodeName() + node.getNodeValue());
+								System.out.println("attr name : " + node.getNodeName() + " >" + node.getNodeValue() + "<");
 							}
 					} else {
 						System.out.println("Not element");
