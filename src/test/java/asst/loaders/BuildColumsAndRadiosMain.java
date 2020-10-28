@@ -31,7 +31,8 @@ public class BuildColumsAndRadiosMain {
 	static PrintStream radios = null;
 	static PrintStream checkboxes= null;
 	static int nameCount = 0;
-	static String FOR_ENGLISH = "<label><input type=\"radio\" name=\"lang\" value=\"0.KJVEnglish\"/ checked>KJV English</label>";
+	static String RADIO_FOR_ENGLISH = "<label><input type=\"radio\" name=\"lang\" value=\"0.KJVEnglish\"/ checked>KJV English</label>";
+	static String BOX_FOR_ENGLISH = "<label><input type=\"checkbox\" name=\"0.KJVEnglish\" title=\"KJV English in parallel\">KVJ English</label>";
 
 	/** Read a list of files and generate alter table commands,
 	 * radio buttons, and checkboxes for each file found.
@@ -52,8 +53,9 @@ public class BuildColumsAndRadiosMain {
 			/* html does not have an include capability so these files
 			 * will be pasted into indx.html.  */
 			radios = new PrintStream(new File(vbls.outdir + File.separator + "radios.txt"), "UTF8");
-			radios.println(FOR_ENGLISH);
+			radios.println(RADIO_FOR_ENGLISH);
 			checkboxes = new PrintStream(new File(vbls.outdir + File.separator + "checkboxes.txt"), "UTF8");
+			checkboxes.println(BOX_FOR_ENGLISH);
 			Files.newDirectoryStream(Paths.get(vbls.path), path -> path.toString().endsWith(".xml")).forEach(csp);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,18 +78,11 @@ public class BuildColumsAndRadiosMain {
 		String alt = "alter table names add column " + fName + " varchar(20) DEFAULT NULL;";
 		// System.out.println(alt);
 		alterTable.println(alt);
-		String tbl = "";
-		String tblNo;
-		if (nameCount < 30) {
-			tbl = "text0";
-			tblNo = "0";
-		} else if (nameCount < 60) {
-			tbl = "text1";
-			tblNo = "1";
-		} else {
-			tbl = "text2";
-			tblNo = "2";
-		}
+
+		/* This table numbering logic must be precisely duplicated
+		 * in the program LoadCorpusBibleFilesMain.*/
+		String tblNo = String.valueOf((5 * (nameCount / 5)) / 5);
+		String tbl = "text" + tblNo;
 		alt = "alter table " + tbl + " add column " + fName + " mediumtext CHARACTER SET utf8;";
 		System.out.println(alt);
 		alterTable.println(alt);
