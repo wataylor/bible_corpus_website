@@ -38,7 +38,9 @@ public class LoadCorpusBibleFilesMain {
 	 * lots of method arguments.*/
 	static Vbls vbls;
 	static int nameCount = 0;
-	static PrintStream updates;
+	static String priorTable = "";
+	static int currentTable;
+	static PrintStream updates = null;
 
 	/** Read a list of files and generate insert statements
 	 * for each file found.
@@ -54,7 +56,6 @@ public class LoadCorpusBibleFilesMain {
 			System.exit(-1);
 		}
 		try {
-			updates = new PrintStream(new File(vbls.outdir + File.separator + "updates.sql"), "UTF8");
 			Files.newDirectoryStream(Paths.get(vbls.path), path -> path.toString().endsWith(".xml")).forEach(csp);
 			System.out.println(vbls.bip.howLongSince(false, true));
 		} catch (Exception e) {
@@ -82,15 +83,16 @@ public class LoadCorpusBibleFilesMain {
 			Document doc = dBuilder.parse(file.toFile());
 			doc.getDocumentElement().normalize();
 
-			if (nameCount < 30) {
-				tbl = "text0";
-				tblNo = "0";
-			} else if (nameCount < 60) {
-				tbl = "text1";
-				tblNo = "1";
-			} else {
-				tbl = "text2";
-				tblNo = "2";
+			/* This table numbering logic must be precisely duplicated
+			 * in the program BuildColumnsAndRadiosMain.*/
+			tblNo = String.valueOf((5 * (nameCount / 5)) / 5);
+			tbl = "text" + tblNo;
+
+			if (!tblNo.equals(priorTable)) {
+				if (updates != null) {
+					updates.close();
+				}
+				updates = new PrintStream(new File(vbls.outdir + File.separator + "updates" + tblNo + ".sql"), "UTF8");
 			}
 
 			/* Walk all the corpus seg list for each verse*/
