@@ -21,11 +21,13 @@ import asst.corpus.utils.BookNameAbbrevMap;
  */
 public class BkNmAbvMpTest {
 
+	/** Define the expected exceptions form bad references. */
 	@Rule
 	public ExpectedException exceptionRule = ExpectedException.none();
 
 	@Test
 	public void testReferenceToChapVerse() {
+		String where;
 		BookChapVerse bcv = BookNameAbbrevMap.referenceToChapVerse("Ge. 1:1-5");
 		assertEquals("Ge.", bcv.bookNameFmUser);
 		assertEquals(1, bcv.bookNumber);
@@ -34,6 +36,12 @@ public class BkNmAbvMpTest {
 		assertEquals(5, bcv.verseTo);
 		assertEquals(0, bcv.verseAnd);
 		assertFalse(bcv.noverse);
+		where = bcv.makeWhere("0.KJVEnglish");
+		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) AND text0.ID = text1.ID order by text0.Verse", where);
 
 		bcv = BookNameAbbrevMap.referenceToChapVerse("2 S 1:1,5");
 		assertEquals("2 S", bcv.bookNameFmUser);
@@ -43,6 +51,12 @@ public class BkNmAbvMpTest {
 		assertEquals(0, bcv.verseTo);
 		assertEquals(5, bcv.verseAnd);
 		assertFalse(bcv.noverse);
+		where = bcv.makeWhere("0.KJVEnglish");
+		assertEquals("text0.Book=10 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Book=10 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Book=10 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) AND text0.ID = text1.ID order by text0.Verse", where);
 
 		bcv = BookNameAbbrevMap.referenceToChapVerse("Philemon 1:1,5");
 		assertEquals("Philemon", bcv.bookNameFmUser);
@@ -52,6 +66,12 @@ public class BkNmAbvMpTest {
 		assertEquals(0, bcv.verseTo);
 		assertEquals(5, bcv.verseAnd);
 		assertFalse(bcv.noverse);
+		where = bcv.makeWhere("0.KJVEnglish");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =1 or text0.Verse =5) AND text0.ID = text1.ID order by text0.Verse", where);
 
 		bcv = BookNameAbbrevMap.referenceToChapVerse("Philemon 5");
 		assertEquals("Philemon", bcv.bookNameFmUser);
@@ -61,6 +81,12 @@ public class BkNmAbvMpTest {
 		assertEquals(0, bcv.verseTo);
 		assertEquals(0, bcv.verseAnd);
 		assertTrue(bcv.noverse);
+		where = bcv.makeWhere("0.KJVEnglish");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5) AND text0.ID = text1.ID order by text0.Verse", where);
 
 		bcv = BookNameAbbrevMap.referenceToChapVerse("Philemon 5,7");
 		assertEquals("Philemon", bcv.bookNameFmUser);
@@ -70,6 +96,12 @@ public class BkNmAbvMpTest {
 		assertEquals(0, bcv.verseTo);
 		assertEquals(7, bcv.verseAnd);
 		assertTrue(bcv.noverse);
+		where = bcv.makeWhere("0.KJVEnglish");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5 or text0.Verse =7) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5 or text0.Verse =7) order by text0.Verse", where);
+		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5 or text0.Verse =7) AND text0.ID = text1.ID order by text0.Verse", where);
 }
 
 	/** Make sure that the exception thrown by the book lookup routine
@@ -106,6 +138,7 @@ public class BkNmAbvMpTest {
 	@Test
 	public void testCodeToBookNo() {
 		assertEquals(1, BookNameAbbrevMap.codeToBookNo("GEN").intValue());
+		assertEquals(66, BookNameAbbrevMap.codeToBookNo("REV").intValue());
 	}
 
 }

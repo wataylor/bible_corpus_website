@@ -1,5 +1,8 @@
 package asst.corpus.utils;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /** Information about a Bible book, chapter, initial verse, and
  * final verse
 
@@ -29,4 +32,39 @@ public class BookChapVerse {
 	/** Indicate when there is no verse specified as in a verse in
 	 * Jude or Philemon which have only one chapter*/
 	public boolean noverse;
+	
+	/** Make a where clause to retrieve all the verses in the reference.
+	 * @param colTableList a semicolon-separated list of
+	 * table number dot column name for
+	 * verses to be retrieved from a mixture of database tables.
+	 * @return where string
+	 */
+	public String makeWhere(String colTableList) {
+		StringBuilder sb = new StringBuilder();
+		String[] s = colTableList.split(";");
+		String[] t = s[0].split("\\.");
+		String table = "text" + t[0];
+		sb.append(table + ".Book=" + bookNumber + " and " + table + ".Chapter =" + chapterNumber);
+		if (verseTo > 0) {
+			sb.append(" and (" + table + ".Verse >=" + verseNumber + " and " + table + ".Verse <=" + verseTo + ")");
+		} else if (verseAnd > 0) {
+			sb.append(" and (" + table + ".Verse =" + verseNumber + " or " + table + ".Verse =" + verseAnd + ")");
+		} else {
+			sb.append(" and (" + table + ".Verse =" + verseNumber + ")");
+		}
+		if (s.length > 1) {
+			/* A set can have only one instance of a given string. */
+			Set<String> tables = new HashSet<String>();
+			for (String tb : s) {
+				t = tb.split("\\.");
+				tables.add("text" + t[0]);
+			}
+			tables.remove(table);
+			for (String tb : tables) {
+				sb.append(" AND " + table + ".ID = " + tb + ".ID");
+			}
+		}
+		sb.append(" order by " + table + ".Verse");
+		return sb.toString();
+	}
 }
