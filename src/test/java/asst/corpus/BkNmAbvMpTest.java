@@ -26,6 +26,16 @@ public class BkNmAbvMpTest {
 	public ExpectedException exceptionRule = ExpectedException.none();
 
 	@Test
+	public void testSquirrel() {
+		String query = BookChapVerse.makeQuery("Ge. 1:1", "0.KJVEnglish;1.Arabic");
+		System.out.println(query);
+		query = BookChapVerse.makeQuery("Ge. 1:1,5", "0.KJVEnglish;1.Arabic");
+		System.out.println(query);
+		query = BookChapVerse.makeQuery("Mt. 1:1,5", "0.KJVEnglish;1.Arabic;4.Chinese");
+		System.out.println(query);
+	}
+
+	@Test
 	public void testReferenceToChapVerse() {
 		String where;
 		BookChapVerse bcv = BookNameAbbrevMap.referenceToChapVerse("Ge. 1:1-5");
@@ -38,10 +48,24 @@ public class BkNmAbvMpTest {
 		assertFalse(bcv.noverse);
 		where = bcv.makeWhere("0.KJVEnglish");
 		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) order by text0.Verse", where);
+		where = bcv.makeColList("0.KJVEnglish");
+		assertEquals("text0.Verse, text0.KJVEnglish", where);
+		where = bcv.makeFromList("0.KJVEnglish");
+		assertEquals("text0", where);
+
 		where = bcv.makeWhere("0.KJVEnglish;0.Afrikaans");
 		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) order by text0.Verse", where);
+		where = bcv.makeColList("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0.Verse, text0.KJVEnglish, text0.Afrikaans", where);
+		where = bcv.makeFromList("0.KJVEnglish;0.Afrikaans");
+		assertEquals("text0", where);
+
 		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
 		assertEquals("text0.Book=1 and text0.Chapter =1 and (text0.Verse >=1 and text0.Verse <=5) AND text0.ID = text1.ID order by text0.Verse", where);
+		where = bcv.makeColList("0.KJVEnglish;1.Arabic");
+		assertEquals("text0.Verse, text0.KJVEnglish, text1.Arabic", where);
+		where = bcv.makeFromList("0.KJVEnglish;1.Arabic");
+		assertEquals("text0, text1", where);
 
 		bcv = BookNameAbbrevMap.referenceToChapVerse("2 S 1:1,5");
 		assertEquals("2 S", bcv.bookNameFmUser);
@@ -102,6 +126,9 @@ public class BkNmAbvMpTest {
 		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5 or text0.Verse =7) order by text0.Verse", where);
 		where = bcv.makeWhere("0.KJVEnglish;1.Arabic");
 		assertEquals("text0.Book=57 and text0.Chapter =1 and (text0.Verse =5 or text0.Verse =7) AND text0.ID = text1.ID order by text0.Verse", where);
+
+		where = bcv.makeColList("0.KJVEnglish;1.Arabic;0.Afrikaans");
+		assertEquals("text0.Verse, text0.KJVEnglish, text1.Arabic, text0.Afrikaans", where);
 }
 
 	/** Make sure that the exception thrown by the book lookup routine

@@ -67,4 +67,67 @@ public class BookChapVerse {
 		sb.append(" order by " + table + ".Verse");
 		return sb.toString();
 	}
+
+	/** Create a column list to be used in a selection list
+	 * @param colTableList language list form the UI
+	 * @return SQL-compliant column list for select statement
+	 */
+	public String makeColList(String colTableList) {
+		StringBuilder sb = new StringBuilder();
+		String[] s = colTableList.split(";");
+		String[] t = s[0].split("\\.");
+		String table = "text" + t[0];
+		
+		sb.append(table + ".Verse, " + table + "." + t[1]);
+
+		if (s.length > 1) {
+			for (int i=1; i<s.length; i++) {
+				t = s[i].split("\\.");
+				table = "text" + t[0];
+				sb.append(", " + table + "." + t[1]);
+			}
+		}
+		return sb.toString();
+	}
+
+	/** Create a list of unique table names for a SQL-compliant
+	 * from clause
+	 * @param colTableList language list form the UI
+	 * @return list of unique tables for a from clause
+	 */
+	public String makeFromList(String colTableList) {
+		StringBuilder sb = new StringBuilder();
+		String[] s = colTableList.split(";");
+		String[] t;
+		/* A set can have only one instance of a given string. */
+		Set<String> tables = new HashSet<String>();
+		for (String tb : s) {
+			t = tb.split("\\.");
+			tables.add("text" + t[0]);
+		}
+		for (String tb : tables) {
+			if (sb.length() > 0) {
+				sb.append(", ");
+			}
+			sb.append(tb);
+		}
+		return sb.toString();
+	}
+
+	/** Create a query string based on a Bible reference and a list of
+	 * languages
+	 * @param ref Bible reference
+	 * @param colTableList semicolon-spearated language list
+	 * @return SQl query
+	 */
+	public static String makeQuery(String ref, String colTableList) {
+		StringBuilder sb = new StringBuilder();
+		BookChapVerse bcv = BookNameAbbrevMap.referenceToChapVerse(ref);
+
+		sb.append("select " + bcv.makeColList(colTableList));
+		sb.append(" from " +  bcv.makeFromList(colTableList));
+		sb.append(" where " +  bcv.makeWhere(colTableList));
+		return sb.toString();
+	}
+
 }
