@@ -27,12 +27,12 @@ public class BkNmAbvMpTest {
 
 	@Test
 	public void testSquirrel() {
-		String query = BookChapVerse.makeQuery("Ge. 1:1", "0.KJVEnglish;1.Arabic");
-		System.out.println(query);
-		query = BookChapVerse.makeQuery("Ge. 1:1,5", "0.KJVEnglish;1.Arabic");
-		System.out.println(query);
-		query = BookChapVerse.makeQuery("Mt. 1:1,5", "0.KJVEnglish;1.Arabic;4.Chinese");
-		System.out.println(query);
+		BookChapVerse bcv = BookChapVerse.makeQuery("Ge. 1:1", "0.KJVEnglish;1.Arabic");
+		System.out.println(bcv.query);
+		bcv = BookChapVerse.makeQuery("Ge. 1:1,5", "0.KJVEnglish;1.Arabic");
+		System.out.println(bcv.query);
+		bcv = BookChapVerse.makeQuery("Mt. 1:1,5", "0.KJVEnglish;1.Arabic;4.Chinese");
+		System.out.println(bcv.query);
 	}
 
 	@Test
