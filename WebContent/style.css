@@ -8,7 +8,7 @@ label {white-space: nowrap; }
       font-style: normal; }
   p { font-size: 1.2em; text-indent: 0em; margin-top: .3em; margin-bottom: 0;
       font-weight: normal; }
-  a { font-size: 0.6em; }
+  a { font-size: 1.2em; }
   .bigger { font-size: 2.0em; }
 
 input{padding:3px;border:1px solid #a0a0a0;background:#fff;}
