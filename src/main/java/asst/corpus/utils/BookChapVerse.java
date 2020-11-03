@@ -32,6 +32,11 @@ public class BookChapVerse {
 	/** Indicate when there is no verse specified as in a verse in
 	 * Jude or Philemon which have only one chapter*/
 	public boolean noverse;
+	/** Number of languages selected */
+	public int languageCount;
+	/** The SQL query to be used to retrieve the selected verses for
+	 * the selected languages(s).*/
+	public String query;
 	
 	/** Make a where clause to retrieve all the verses in the reference.
 	 * @param colTableList a semicolon-separated list of
@@ -77,6 +82,7 @@ public class BookChapVerse {
 		String[] s = colTableList.split(";");
 		String[] t = s[0].split("\\.");
 		String table = "text" + t[0];
+		languageCount = s.length;
 		
 		sb.append(table + ".Verse, " + table + "." + t[1]);
 
@@ -120,14 +126,15 @@ public class BookChapVerse {
 	 * @param colTableList semicolon-spearated language list
 	 * @return SQl query
 	 */
-	public static String makeQuery(String ref, String colTableList) {
+	public static BookChapVerse makeQuery(String ref, String colTableList) {
 		StringBuilder sb = new StringBuilder();
 		BookChapVerse bcv = BookNameAbbrevMap.referenceToChapVerse(ref);
 
 		sb.append("select " + bcv.makeColList(colTableList));
 		sb.append(" from " +  bcv.makeFromList(colTableList));
 		sb.append(" where " +  bcv.makeWhere(colTableList));
-		return sb.toString();
+		bcv.query = sb.toString();
+		return bcv;
 	}
 
 }
