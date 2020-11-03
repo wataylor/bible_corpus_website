@@ -13,6 +13,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -55,7 +57,7 @@ public class SQLU {
    * @param value required to be found in the filter column.
    * @return vector of distinct column values which match the filter condition.
    * @throws SQLException when things go wrong*/
-  public static Vector<String> VectorizeColumn(String table,  String column,
+  public static List<String> VectorizeColumn(String table,  String column,
 					       String filter, String value)
     throws SQLException {
     String query;		// The query to select the values
@@ -79,7 +81,7 @@ public class SQLU {
     }
     query   = query + " order by " + column;
 
-    return SQLU.VectorizeQuery(query);
+    return SQLU.vectorizeQuery(query);
   }
 
   /** Execute any update or insert statement against the database.
@@ -113,8 +115,7 @@ public class SQLU {
    value and the rest of the string is displayed.  The vector is empty
    if the search has no results.
   @exception RuntimeException on SQL error.*/
-  public static Vector<String> VectorizeQuery(String query) {
-    Vector<String> list;		// Results returned to caller
+  public static List<String> vectorizeQuery(String query) {
     Statement getRow = null;	// Retrieve all the rows
     StringBuffer value;		// Result of the query
     ResultSet results = null;	// List of all values in the query
@@ -123,7 +124,7 @@ public class SQLU {
     int i;
     /**/
 
-    list = new Vector<String>();
+    ArrayList<String> list = new ArrayList<String>();
 
     try {
       getRow  = DataBase.connDB.createStatement();
@@ -138,7 +139,7 @@ public class SQLU {
 	  value.append(results.getString(i));
 	}
 	if (value.length() > 0) {
-	  list.addElement(value.toString());
+	  list.add(value.toString());
 	}
       }
     } catch (SQLException e) {
