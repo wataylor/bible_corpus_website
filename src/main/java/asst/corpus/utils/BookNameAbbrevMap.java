@@ -12,7 +12,8 @@ import java.util.Map;
  */
 public class BookNameAbbrevMap {
 
-	/** Map book names and abbreviations to the sequential book number */
+	/** Map book names and abbreviations to the sequential book number.
+	 * This is used for book names entered via the UI. */
 	public static Map<String, Integer> bookNumbers = new HashMap<String, Integer>();
 	static {
 		bookNumbers.put("Genesis", 1);            bookNumbers.put("Ge.", 1);
@@ -138,13 +139,24 @@ public class BookNameAbbrevMap {
 		bookCodes.put("DEU", 5);
 		bookCodes.put("JOS", 6);
 		bookCodes.put("JDG", 7);
+
 		bookCodes.put("RTH", 8);
+		bookCodes.put("RUT", 8);
+
 		bookCodes.put("SA1", 9);
 		bookCodes.put("SA2", 10);
 		bookCodes.put("KI1", 11);
 		bookCodes.put("KI2", 12);
 		bookCodes.put("CH1", 13);
 		bookCodes.put("CH2", 14);
+
+		bookCodes.put("1SA", 9);
+		bookCodes.put("2SA", 10);
+		bookCodes.put("1KI", 11);
+		bookCodes.put("2KI", 12);
+		bookCodes.put("1CH", 13);
+		bookCodes.put("2CH", 14);
+
 		bookCodes.put("EZR", 15);
 		bookCodes.put("NEH", 16);
 		bookCodes.put("EST", 17);
@@ -176,25 +188,42 @@ public class BookNameAbbrevMap {
 		bookCodes.put("JOH", 43);
 		bookCodes.put("ACT", 44);
 		bookCodes.put("ROM", 45);
+
 		bookCodes.put("CO1", 46);
 		bookCodes.put("CO2", 47);
+		bookCodes.put("1CO", 46);
+		bookCodes.put("2CO", 47);
+
 		bookCodes.put("GAL", 48);
 		bookCodes.put("EPH", 49);
 		bookCodes.put("PHI", 50);
 		bookCodes.put("COL", 51);
+
 		bookCodes.put("TH1", 52);
 		bookCodes.put("TH2", 53);
 		bookCodes.put("TI1", 54);
 		bookCodes.put("TI2", 55);
+		bookCodes.put("1TH", 52);
+		bookCodes.put("2TH", 53);
+		bookCodes.put("1TI", 54);
+		bookCodes.put("2TI", 55);
+
 		bookCodes.put("TIT", 56);
 		bookCodes.put("PHM", 57);
 		bookCodes.put("HEB", 58);
 		bookCodes.put("JAM", 59);
+
 		bookCodes.put("PE1", 60);
 		bookCodes.put("PE2", 61);
 		bookCodes.put("JO1", 62);
 		bookCodes.put("JO2", 63);
 		bookCodes.put("JO3", 64);
+		bookCodes.put("1PE", 60);
+		bookCodes.put("2PE", 61);
+		bookCodes.put("1JO", 62);
+		bookCodes.put("2JO", 63);
+		bookCodes.put("3JO", 64);
+
 		bookCodes.put("JUD", 65);
 		bookCodes.put("REV", 66);
 	}
