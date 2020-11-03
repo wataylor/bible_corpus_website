@@ -32,7 +32,7 @@ String lang = request.getParameter("lang");
  			"<p>The request did not return any verses.  Do the chapter and verse exist in the specified book?</p>");
  		} else {
  			FormatResponseText.generateText(sb, rows, bcv);
- 			System.out.println(sb.toString());
+ 			// System.out.println(sb.toString());
  		}
  	} catch (Exception e) {
  		sb.append(e.getMessage());
