@@ -129,7 +129,7 @@ public class BookNameAbbrevMap {
 		bookNumbers.put("Revelation", 66);        bookNumbers.put("Re.", 66);
 	}
 
-	/** May 3-letter book name codes to sequential book numbers */
+	/** Map 3-letter book name codes to sequential book numbers */
 	public static Map<String, Integer> bookCodes = new HashMap<String, Integer>();
 	static {
 		bookCodes.put("GEN", 1);
@@ -203,6 +203,7 @@ public class BookNameAbbrevMap {
 		bookCodes.put("TH2", 53);
 		bookCodes.put("TI1", 54);
 		bookCodes.put("TI2", 55);
+
 		bookCodes.put("1TH", 52);
 		bookCodes.put("2TH", 53);
 		bookCodes.put("1TI", 54);
@@ -227,6 +228,77 @@ public class BookNameAbbrevMap {
 		bookCodes.put("JUD", 65);
 		bookCodes.put("REV", 66);
 	}
+
+	/** List the formal book names based on the book number */
+	public static final String[] FormalBookNames = {
+			"unknown", // book number 0
+			"Genesis",
+			"Exodus",
+			"Leviticus",
+			"Numbers",
+			"Deuteronomy",
+			"Joshua",
+			"Judges",
+			"Ruth",
+			"I Samuel",
+			"II Samuel",
+			"I Kings",
+			"II Kings",
+			"I Chronicles",
+			"II Chronicles",
+			"Ezra",
+			"Nehemiah",
+			"Esther",
+			"Job",
+			"Psalms",
+			"Proverbs",
+			"Ecclesiastes",
+			"SongofSolomon",
+			"Isaiah",
+			"Jeremiah",
+			"Lamentations",
+			"Ezekiel",
+			"Daniel",
+			"Hosea",
+			"Joel",
+			"Amos",
+			"Obadiah",
+			"Jonah",
+			"Micah",
+			"Nahum",
+			"Habbakuk",
+			"Zephaniah",
+			"Haggai",
+			"Zechariah",
+			"Malachi",
+			"Matthew",
+			"Mark",
+			"Luke",
+			"John",
+			"Acts",
+			"Romans",
+			"I Corinthians",
+			"II Corinthians",
+			"Galatians",
+			"Ephesians",
+			"Philippians",
+			"Colossians",
+			"I Thessalonians",
+			"II Thessalonians",
+			"I Timothy",
+			"II Timothy",
+			"Titus",
+			"Philemon",
+			"Hebrews",
+			"James",
+			"I Peter",
+			"II Peter",
+			"I John",
+			"II John",
+			"III John",
+			"Jude",
+			"Revelation"
+	};
 
 	/** Convert a reference string to a BookChapVerse object or
 	 * throw a runtime exception.
@@ -269,6 +341,8 @@ public class BookNameAbbrevMap {
 			while (Character.isSpaceChar(reference.charAt(i))) { i--; }
 			bcv.bookNameFmUser = reference.substring(0, i+1);
 			bcv.bookNumber = findBookNumber(bcv.bookNameFmUser);
+			bcv.formalReference = FormalBookNames[bcv.bookNumber] + " "
+					+ reference.substring(i+1).trim();
 
 			if (bcv.noverse) {
 				bcv.verseNumber   = bcv.chapterNumber;
