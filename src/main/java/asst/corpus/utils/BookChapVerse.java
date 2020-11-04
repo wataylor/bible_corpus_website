@@ -18,6 +18,8 @@ public class BookChapVerse {
 	 * expressed in many ways. I Samuel, Is, 1 S and so on. 
 	 */
 	public String bookNameFmUser;
+	/** Formalization of the verse reference from the user */
+	public String formalReference;
 	/** Book number 1-66 */
 	public int bookNumber;
 	/** Chapter number 1 through however many the book has */
