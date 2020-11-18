@@ -30,9 +30,11 @@ public class BuildColumsAndRadiosMain {
 	static PrintStream alterTable = null;
 	static PrintStream radios = null;
 	static PrintStream checkboxes= null;
+	static PrintStream nameTables = null;
 	static int nameCount = 0;
 	static String RADIO_FOR_ENGLISH = "<label><input type=\"radio\" name=\"lang\" value=\"0.KJVEnglish\"/ checked>KJV English</label>";
 	static String BOX_FOR_ENGLISH = "<label><input type=\"checkbox\" name=\"0.KJVEnglish\" title=\"KJV English in parallel\">KVJ English</label>";
+	static String MAP_FOR_ENGLISH = "LANG_2_TABLE.put(\"KVJ English\", \"0.KJVEnglish\");";
 
 	/** Read a list of files and generate alter table commands,
 	 * radio buttons, and checkboxes for each file found.
@@ -56,6 +58,8 @@ public class BuildColumsAndRadiosMain {
 			radios.println(RADIO_FOR_ENGLISH);
 			checkboxes = new PrintStream(new File(vbls.outdir + File.separator + "checkboxes.txt"), "UTF8");
 			checkboxes.println(BOX_FOR_ENGLISH);
+			nameTables = new PrintStream(new File(vbls.outdir + File.separator + "nameMapper.txt"), "UTF8");
+			nameTables.println(MAP_FOR_ENGLISH);
 			Files.newDirectoryStream(Paths.get(vbls.path), path -> path.toString().endsWith(".xml")).forEach(csp);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,6 +95,8 @@ public class BuildColumsAndRadiosMain {
 		radios.println(alt);
 		alt = "<label><input type=\"checkbox\" name=\"" + tblNo + "." + fName + "\" title=\"" + pureName + " in parallel\">" + pureName + "</label>";
 		checkboxes.println(alt);
+		alt = "LANG_2_TABLE.put(\"" + pureName + "\", \"" + tblNo + "." + fName + "\");";
+		nameTables.println(alt);
 		nameCount++;
 	}
 }
