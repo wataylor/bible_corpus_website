@@ -1,0 +1,58 @@
+<HTML xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en">
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-180864298-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-180864298-1');
+</script>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<TITLE>
+__TITLE__
+</TITLE>
+<style>
+.vn {
+text-align:right; vertical-align: top;
+}
+.vs {
+vertical-align: top;
+}
+</style>
+</head>
+<body>
+<table>
+<tr><td colspan="2">
+Books: <select name="book" id="book">
+    <option value="" selected="selected">Select Book</option>
+  </select>
+
+Chapters: <select name="chapter" id="chapter">
+    <option value="" selected="selected">Please select book first</option>
+  </select>
+
+Verses: <select name="verse" id="verse">
+    <option value="" selected="selected">Please select chapter first</option>
+  </select>
+<script>
+ function setSearch() {
+  var bookSel = document.getElementById("book");
+  var chapterSel = document.getElementById("chapter");
+  var verseSel = document.getElementById("verse");
+  var anchah = bookSel.value + "_" + chapterSel.value + "_" + verseSel.value;
+  if (confirm(anchah)) {
+   var elem = document.getElementById(anchah);
+   elem.scrollIntoView();
+  }
+ }
+ function toTop() {
+  var elem = document.getElementById("book");
+  elem.scrollIntoView();
+ }
+</script>
+<input type="button" name="Go" value="Go" id="go" onClick="setSearch()">
+</td></tr>

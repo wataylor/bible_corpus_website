@@ -1,0 +1,40 @@
+
+ window.onload = function() {
+  var bookSel = document.getElementById("book");
+  var chapterSel = document.getElementById("chapter");
+  var verseSel = document.getElementById("verse");
+  for ( var x in babel) {
+   bookSel.options[bookSel.options.length] = new Option(x, x);
+  }
+
+  bookSel.onchange = function() {
+   while (chapterSel.options.length > 0) {
+    chapterSel.remove(0);
+   }
+   chapterSel.options[0] = new Option("Pick", "pick");
+   while (verseSel.options.length > 0) {
+    verseSel.remove(0);
+   }
+   verseSel.options[0] = new Option("Pick", "pick");
+   var z = babel[this.value];
+   for (var i = 0; i < z.length; i++) {
+    chapterSel.options[chapterSel.options.length] = new Option(
+      i + 1, i + 1);
+   }
+  }
+
+  chapterSel.onchange = function() {
+   while (verseSel.options.length > 0) {
+    verseSel.remove(0);
+   }
+   verseSel.options[0] = new Option("Pick", "pick");
+   var z = babel[bookSel.value][this.value-1];
+   for (var i = 0; i < z; i++) {
+    verseSel.options[verseSel.options.length] = new Option(i + 1,
+      i + 1);
+   }
+  }
+ }
+</script>
+</body>
+</html>
