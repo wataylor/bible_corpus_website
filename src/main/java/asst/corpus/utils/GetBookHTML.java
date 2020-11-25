@@ -68,7 +68,7 @@ public class GetBookHTML {
 			
 			for (int start = 0; start < 40000; start += 2000) {
 				msg = query + start + " and ID <(" + start + " + 2000) order by ID";
-				System.out.println(msg);
+				// System.out.println(msg);
 				res = stmt.executeQuery(msg);
 				if (res.next()) {
 					do {
@@ -89,7 +89,7 @@ public class GetBookHTML {
 								ps.println("<tr><th><a href=\"#book\">&#10224;</a></th><th id=\"" + bookName + "_" + res.getString(2) + "\">" + bookName + " Chapter " + res.getString(2) + "</th></tr>");
 							}
 							msg = "<tr><td class=\"vn\" id=\"" + bookName + "_" + chap + "_" + res.getInt(3) + "\">" + res.getInt(3) + "</td><td class=\"vp\">" + voise + "</td></tr>";
-							System.out.println(msg);
+							// System.out.println(msg);
 							ps.println(msg);
 						}
 					} while (res.next());
