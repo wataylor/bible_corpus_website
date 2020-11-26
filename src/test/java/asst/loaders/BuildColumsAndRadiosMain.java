@@ -33,8 +33,8 @@ public class BuildColumsAndRadiosMain {
 	static PrintStream nameTables = null;
 	static int nameCount = 0;
 	static String RADIO_FOR_ENGLISH = "<label><input type=\"radio\" name=\"lang\" value=\"0.KJVEnglish\"/ checked>KJV English</label>";
-	static String BOX_FOR_ENGLISH = "<label><input type=\"checkbox\" name=\"0.KJVEnglish\" title=\"KJV English in parallel\">KVJ English</label>";
-	static String MAP_FOR_ENGLISH = "LANG_2_TABLE.put(\"KVJ English\", \"0.KJVEnglish\");";
+	static String BOX_FOR_ENGLISH = "<label><input type=\"checkbox\" name=\"0.KJVEnglish\" title=\"KJV English in parallel\">KJV English</label>";
+	static String MAP_FOR_ENGLISH = "LANG_2_TABLE.put(\"KJV English\", \"0.KJVEnglish\");";
 
 	/** Read a list of files and generate alter table commands,
 	 * radio buttons, and checkboxes for each file found.

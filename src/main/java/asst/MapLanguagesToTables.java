@@ -17,7 +17,7 @@ public class MapLanguagesToTables {
 	 * table and column where it is to be found. */
 	public static Map<String, String> LANG_2_TABLE = new TreeMap<String, String>();
 	static {
-		LANG_2_TABLE.put("KVJ English", "0.KJVEnglish");
+		LANG_2_TABLE.put("KJV English", "0.KJVEnglish");
 		LANG_2_TABLE.put("Achuar-NT", "0.Achuar_NT");
 		LANG_2_TABLE.put("Afrikaans", "0.Afrikaans");
 		LANG_2_TABLE.put("Aguaruna-NT", "0.Aguaruna_NT");
@@ -138,9 +138,9 @@ public class MapLanguagesToTables {
 				+ "<div class=\"row\">\n"
 				+ "<div>\n");
 
-		sb.append(makeHrefOf("KVJ English"));
+		sb.append(makeHrefOf("KJV English"));
 		for (String s : LANG_2_TABLE.keySet()) {
-			if (!"KVJ English".equals(s)) {
+			if (!"KJV English".equals(s)) {
 				sb.append(makeHrefOf(s));
 			}
 		}
