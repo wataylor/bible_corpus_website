@@ -6,6 +6,7 @@
   for ( var x in babel) {
    bookSel.options[bookSel.options.length] = new Option(x, x);
   }
+  document.getElementById("go").style.background="#00ff00";
 
   bookSel.onchange = function() {
    while (chapterSel.options.length > 0) {
