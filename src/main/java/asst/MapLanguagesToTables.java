@@ -31,6 +31,7 @@ public class MapLanguagesToTables {
 		LANG_2_TABLE.put("Barasana-NT", "2.Barasana_NT");
 		LANG_2_TABLE.put("Basque-NT", "2.Basque_NT");
 		LANG_2_TABLE.put("Bulgarian", "2.Bulgarian");
+		LANG_2_TABLE.put("Burmese", "21.Burmese");
 		LANG_2_TABLE.put("Cabecar-NT", "2.Cabecar_NT");
 		LANG_2_TABLE.put("Cakchiquel-NT", "2.Cakchiquel_NT");
 		LANG_2_TABLE.put("Campa-NT", "3.Campa_NT");
