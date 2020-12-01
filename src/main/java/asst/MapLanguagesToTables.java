@@ -14,7 +14,10 @@ import java.util.TreeMap;
  */
 public class MapLanguagesToTables {
 	/**  Map the name of each translation to the database
-	 * table and column where it is to be found. */
+	 * table and column where it is to be found.  This is a TreeSet
+	 * so that keys are retrieved in alphabetical order.
+	 * The first element is handled in a special manner in all methods
+	 * that process the keys of this set.*/
 	public static Map<String, String> LANG_2_TABLE = new TreeMap<String, String>();
 	static {
 		LANG_2_TABLE.put("KJV English", "0.KJVEnglish");
@@ -153,5 +156,47 @@ public class MapLanguagesToTables {
 
 	private static String makeHrefOf(String str) {
 		return "<a href=\"" + str + "\"/>" + str + "</a> ";
+	}
+
+	/** Create .html radio buttons to select the first language
+	 * in a request
+	 * @return one radio button for every language in the corpus
+	 */
+	public static String makeRadios() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(makeRadioOf("KJV English"));
+		for (String s : LANG_2_TABLE.keySet()) {
+			if (!"KJV English".equals(s)) {
+				sb.append(makeRadioOf(s));
+			}
+		}
+		return sb.toString();
+	}
+
+	private static Object makeRadioOf(String lang) {
+		String tbl = LANG_2_TABLE.get(lang);
+		return "<label><input type=\"radio\" name=\"lang\" value=\"" + tbl
+				+ "\"/ checked>" + lang + "</label>\n";
+	}
+
+	/** Create .html checkboxes to select additional languages
+	 * in a request
+	 * @return one checkbox for every language in the corpus
+	 */
+	public static String makeCheckboxes() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(makeCheckboxOf("KJV English"));
+		for (String s : LANG_2_TABLE.keySet()) {
+			if (!"KJV English".equals(s)) {
+				sb.append(makeCheckboxOf(s));
+			}
+		}
+		return sb.toString();
+	}
+
+	private static Object makeCheckboxOf(String lang) {
+		String tbl = LANG_2_TABLE.get(lang);
+		return "<label><input type=\"checkbox\" name=\"lang\" value=\"" + tbl
+				+ "\"/ checked>" + lang + "</label>\n";
 	}
 }
