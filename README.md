@@ -52,7 +52,11 @@ The repository includes a file **aText.sql** which creates and initializes a tab
   UNIQUE KEY `col` (`Code`,`Chapter`,`Verse`),
   UNIQUE KEY `bok` (`Book`,`Chapter`,`Verse`)
 
-The table name is set to **text99** in the file so that it will not conflict with an existing table.  **Be sure** to change all instances of text99 to whatever table name you want to create.
+The table name is set to **text99** in the file so that it will not conflict with an existing table.  *Be sure* to change all instances of text99 to whatever table name you want to create.  Add columns for each translation:
+
+**alter table text<number> add column <translation> mediumtext CHARACTER SET utf8;**
+
+Specifying the character set is important.
 
 A program which reads data to insert a verse for a new translation uses SQL **update** statements like
 
