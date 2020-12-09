@@ -164,19 +164,20 @@ public class MapLanguagesToTables {
 	 */
 	public static String makeRadios() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(makeRadioOf("KJV English"));
+		sb.append(makeRadioOf("KJV English", true));
 		for (String s : LANG_2_TABLE.keySet()) {
 			if (!"KJV English".equals(s)) {
-				sb.append(makeRadioOf(s));
+				sb.append(makeRadioOf(s, false));
 			}
 		}
 		return sb.toString();
 	}
 
-	private static Object makeRadioOf(String lang) {
+	private static Object makeRadioOf(String lang, boolean chek) {
 		String tbl = LANG_2_TABLE.get(lang);
 		return "<label><input type=\"radio\" name=\"lang\" value=\"" + tbl
-				+ "\"/ checked>" + lang + "</label>\n";
+				+ "\""
+				+ (chek ? "checked" : "") + "/>" + lang + "</label>\n";
 	}
 
 	/** Create .html checkboxes to select additional languages
@@ -196,7 +197,7 @@ public class MapLanguagesToTables {
 
 	private static Object makeCheckboxOf(String lang) {
 		String tbl = LANG_2_TABLE.get(lang);
-		return "<label><input type=\"checkbox\" name=\"lang\" value=\"" + tbl
-				+ "\"/ checked>" + lang + "</label>\n";
+		return "<label><input type=\"checkbox\" name=\"" + tbl
+				+ "\" title=\"" + lang + " in parallel\">" + lang + "</label>\n";
 	}
 }
